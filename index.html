@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My 2025 Learning Journey</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-dark: #0f172a;
+            --primary-light: #f8fafc;
+            --transition-speed: 0.5s;
+        }
+
+        body {
+            background: #111;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Video Container - 9:16 Aspect Ratio */
+        .video-container {
+            width: 100%;
+            background: #000;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            aspect-ratio: 9/16;
+        }
+
+        #video-stage {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: var(--primary-dark);
+            transition: background var(--transition-speed);
+            overflow: hidden;
+        }
+
+        /* Title Screen */
+        .title-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            opacity: 1;
+            transition: opacity 1s;
+        }
+
+        .title-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .main-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding: 0 20px;
+        }
+
+        .year-badge {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            font-weight: 300;
+            letter-spacing: 5px;
+        }
+
+        /* Logo Grid */
+        .logo-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 10px;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 1s, filter var(--transition-speed);
+        }
+
+        .logo-grid.active {
+            opacity: 1;
+        }
+
+        .logo-grid.blurred {
+            filter: blur(5px) brightness(0.7);
+        }
+
+        .logo-card {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+            transform: scale(0.8);
+            border: 2px solid transparent;
+        }
+
+        .logo-card.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .logo-card.placed {
+            animation: pulse 0.5s ease;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            margin-bottom: 8px;
+            filter: brightness(0) invert(1);
+        }
+
+        .logo-card.html .logo-img { filter: none; }
+        .logo-card.css .logo-img { filter: none; }
+        .logo-card.github .logo-img { filter: brightness(0) invert(0); }
+
+        .logo-name {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-align: center;
+            color: #e2e8f0;
+        }
+
+        /* Current Logo Animation */
+        .current-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(3);
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .current-logo.active {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(2.5);
+        }
+
+        .current-logo.zoom-out {
+            transform: translate(-50%, -50%) scale(0.5);
+            opacity: 0;
+        }
+
+        .current-logo-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            filter: brightness(0) invert(1);
+        }
+
+        .html-logo .current-logo-img { filter: none; }
+        .css-logo .current-logo-img { filter: none; }
+        .github-logo .current-logo-img { filter: brightness(0) invert(0); }
+
+        .current-logo-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 50px;
+        }
+
+        /* Outro Screen */
+        .outro-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 90;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 2s;
+        }
+
+        .outro-screen.active {
+            opacity: 1;
+        }
+
+        .outro-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            text-align: center;
+            background: linear-gradient(90deg, #f97316 0%, #eab308 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .outro-message {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            text-align: center;
+            max-width: 80%;
+            line-height: 1.5;
+        }
+
+        /* Controls Panel */
+        .controls-panel {
+            background: rgba(30, 41, 59, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .controls-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background: #475569;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            flex: 1;
+            justify-content: center;
+            min-width: 60px;
+        }
+
+        .control-btn:hover {
+            background: #64748b;
+            transform: translateY(-2px);
+        }
+
+        .control-btn:active {
+            transform: translateY(0);
+        }
+
+        .control-btn.primary {
+            background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+        }
+
+        .control-btn.warning {
+            background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .control-btn.success {
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+        }
+
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid white;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-btn.dark {
+            background: #0f172a;
+        }
+
+        .theme-btn.light {
+            background: #f8fafc;
+        }
+
+        .theme-btn.colorful {
+            background: linear-gradient(90deg, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #8b5cf6, #ec4899);
+        }
+
+        .theme-btn.active {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: #334155;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        #progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            width: 0%;
+            transition: width 0.3s;
+            border-radius: 5px;
+        }
+
+        .speed-btn {
+            background: #475569;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .speed-btn.active {
+            background: #3b82f6;
+            font-weight: bold;
+        }
+
+        /* Status Display */
+        .status-display {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 10px;
+            padding: 10px 15px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            margin-top: 10px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        /* Recording Indicator */
+        .recording-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ef4444;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        .recording-indicator.active {
+            opacity: 1;
+        }
+
+        .recording-dot {
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            animation: recording-pulse 1s infinite;
+        }
+
+        @keyframes recording-pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .current-logo-name {
+                font-size: 1.5rem;
+            }
+            
+            .controls-group {
+                justify-content: center;
+            }
+            
+            .control-btn {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; margin-bottom: 10px; color: #e2e8f0;">
+            <i class="fas fa-play-circle"></i> My 2025 Learning Journey
+        </h1>
+        
+        <div class="video-container">
+            <div id="video-stage">
+                <!-- Title Screen -->
+                <div class="title-screen" id="title-screen">
+                    <h1 class="main-title">My 2025<br>Learning Journey</h1>
+                    <div class="year-badge">2025</div>
+                    <div style="margin-top: 40px; color: #94a3b8; font-size: 0.9rem;">
+                        <i class="fas fa-spinner fa-spin"></i> Loading animation...
+                    </div>
+                </div>
+                
+                <!-- Logo Grid -->
+                <div class="logo-grid" id="logo-grid"></div>
+                
+                <!-- Current Logo Animation -->
+                <div class="current-logo" id="current-logo"></div>
+                
+                <!-- Outro Screen -->
+                <div class="outro-screen" id="outro-screen">
+                    <h2 class="outro-title">What a Year!</h2>
+                    <p class="outro-message">
+                        12 new tools and skills mastered.<br>
+                        Ready to build amazing things in 2026!
+                    </p>
+                    <div style="margin-top: 30px; font-size: 4rem;">
+                        🚀
+                    </div>
+                    <p style="margin-top: 20px; color: #cbd5e1; font-size: 1rem;">
+                        Keep learning, keep growing!
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recording Indicator -->
+        <div class="recording-indicator" id="recording-indicator">
+            <div class="recording-dot"></div>
+            Recording in progress...
+        </div>
+        
+        <!-- Status Display -->
+        <div class="status-display" id="status-display">
+            <i class="fas fa-info-circle"></i> Ready to start your 2025 learning journey!
+        </div>
+        
+        <!-- Controls Panel -->
+        <div class="controls-panel">
+            <!-- Main Controls -->
+            <div class="controls-row">
+                <button class="control-btn primary" id="play-btn">
+                    <i class="fas fa-play"></i> Play
+                </button>
+                <button class="control-btn" id="pause-btn">
+                    <i class="fas fa-pause"></i> Pause
+                </button>
+                <button class="control-btn" id="replay-btn">
+                    <i class="fas fa-redo"></i> Replay
+                </button>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div id="progress-bar"></div>
+            </div>
+            
+            <!-- Theme Controls -->
+            <div class="controls-row">
+                <span style="color: #cbd5e1; font-weight: 600;">Theme:</span>
+                <div class="controls-group">
+                    <div class="theme-btn dark active" id="theme-dark" title="Dark Theme"></div>
+                    <div class="theme-btn light" id="theme-light" title="Light Theme"></div>
+                    <div class="theme-btn colorful" id="theme-colorful" title="Colorful Theme"></div>
+                </div>
+            </div>
+            
+            <!-- Sound & Speed Controls -->
+            <div class="controls-row">
+                <button class="control-btn" id="sound-btn">
+                    <i class="fas fa-volume-up"></i> Sound On
+                </button>
+                <div class="controls-group">
+                    <span style="color: #cbd5e1; font-weight: 600;">Speed:</span>
+                    <button class="speed-btn active" data-speed="1">1x</button>
+                    <button class="speed-btn" data-speed="0.5">0.5x</button>
+                    <button class="speed-btn" data-speed="2">2x</button>
+                </div>
+            </div>
+            
+            <!-- Navigation Controls -->
+            <div class="controls-row">
+                <button class="control-btn warning" id="skip-intro">
+                    <i class="fas fa-forward"></i> Skip Intro
+                </button>
+                <button class="control-btn warning" id="skip-outro">
+                    <i class="fas fa-forward"></i> Skip Outro
+                </button>
+                <button class="control-btn success" id="download-btn">
+                    <i class="fas fa-download"></i> Save Video
+                </button>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px; color: #94a3b8; font-size: 0.8rem;">
+            <i class="fas fa-code"></i> Created with HTML, CSS & JavaScript | 12 Tools Learned in 2025
+        </div>
+    </div>
+
+    <!-- Include html2canvas and RecordRTC for video recording -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/RecordRTC/5.6.2/RecordRTC.min.js"></script>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            titleDuration: 6000, // 6 seconds
+            logoDuration: 3000,  // 3 seconds per logo
+            outroDuration: 5000, // 5 seconds
+            totalLogos: 12
+        };
+
+        // Learning Tools Data
+        const tools = [
+            { 
+                name: "LinkedIn", 
+                color: "#0077B5",
+                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/linkedin.svg"
+            },
+            { 
+                name: "DeepSeek", 
+                color: "#0d6efd",
+                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/openai.svg" // Placeholder
+            },
+            { 
+                name: "Kaggle", 
+                color: "#20BEFF",
+                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/kaggle.svg"
+            },
+            { 
+                name: "Python", 
+                color: "#3776AB",
+                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/python.svg"
+            },
+            { 
+                name: "Markdown", 
+                color: "#000000",
+                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/markdown.svg"
+            },
+            { 
+                name: "VS Code", 
+                color: "#007ACC",
+                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/visualstudiocode.svg"
+            },
+            { 
+                name: "Alison", 
+                color: "#00A79D",
+                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/coursera.svg" // Placeholder
+            },
+            { 
+                name: "Khan Academy", 
+                color: "#14BF96",
+                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/khanacademy.svg"
+            },
+            { 
+                name: "LoveAble", 
+                color: "#FF6B8B",
+                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/love.svg" // Placeholder
+            },
+            { 
+                name: "HTML", 
+                color: "#E34F26",
+                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/html5.svg"
+            },
+            { 
+                name: "CSS", 
+                color: "#1572B6",
+                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/css3.svg"
+            },
+            { 
+                name: "GitHub", 
+                color: "#181717",
+                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/github.svg"
+            }
+        ];
+
+        // App State
+        let state = {
+            currentIndex: -1,
+            isPlaying: false,
+            soundEnabled: true,
+            currentSpeed: 1,
+            currentTheme: 'dark',
+            animationTimeout: null,
+            recorder: null,
+            recordedChunks: [],
+            mediaRecorder: null
+        };
+
+        // DOM Elements
+        const videoStage = document.getElementById('video-stage');
+        const titleScreen = document.getElementById('title-screen');
+        const logoGrid = document.getElementById('logo-grid');
+        const currentLogo = document.getElementById('current-logo');
+        const outroScreen = document.getElementById('outro-screen');
+        const progressBar = document.getElementById('progress-bar');
+        const statusDisplay = document.getElementById('status-display');
+        const recordingIndicator = document.getElementById('recording-indicator');
+
+        // Control Buttons
+        const playBtn = document.getElementById('play-btn');
+        const pauseBtn = document.getElementById('pause-btn');
+        const replayBtn = document.getElementById('replay-btn');
+        const soundBtn = document.getElementById('sound-btn');
+        const skipIntroBtn = document.getElementById('skip-intro');
+        const skipOutroBtn = document.getElementById('skip-outro');
+        const downloadBtn = document.getElementById('download-btn');
+        const themeDark = document.getElementById('theme-dark');
+        const themeLight = document.getElementById('theme-light');
+        const themeColorful = document.getElementById('theme-colorful');
+        const speedButtons = document.querySelectorAll('.speed-btn');
+
+        // Initialize
+        function init() {
+            createLogoGrid();
+            setupEventListeners();
+            updateStatus('Click Play to start your learning journey!');
+        }
+
+        // Create the 3x4 logo grid
+        function createLogoGrid() {
+            logoGrid.innerHTML = '';
+            tools.forEach((tool, index) => {
+                const card = document.createElement('div');
+                card.className = `logo-card ${tool.name.toLowerCase().replace(' ', '-')}`;
+                card.dataset.index = index;
+                card.style.borderColor = tool.color;
+                card.style.backgroundColor = `${tool.color}20`; // 20 = 12% opacity
+                
+                const img = document.createElement('img');
+                img.className = 'logo-img';
+                img.src = tool.logo;
+                img.alt = `${tool.name} logo`;
+                
+                const name = document.createElement('div');
+                name.className = 'logo-name';
+                name.textContent = tool.name;
+                
+                card.appendChild(img);
+                card.appendChild(name);
+                logoGrid.appendChild(card);
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            playBtn.addEventListener('click', startAnimation);
+            pauseBtn.addEventListener('click', pauseAnimation);
+            replayBtn.addEventListener('click', resetAnimation);
+            soundBtn.addEventListener('click', toggleSound);
+            skipIntroBtn.addEventListener('click', skipIntro);
+            skipOutroBtn.addEventListener('click', skipOutro);
+            downloadBtn.addEventListener('click', startRecording);
+            
+            // Theme buttons
+            themeDark.addEventListener('click', () => setTheme('dark'));
+            themeLight.addEventListener('click', () => setTheme('light'));
+            themeColorful.addEventListener('click', () => setTheme('colorful'));
+            
+            // Speed buttons
+            speedButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    setSpeed(parseFloat(this.dataset.speed));
+                });
+            });
+        }
+
+        // Start the animation sequence
+        function startAnimation() {
+            if (state.isPlaying) return;
+            
+            state.isPlaying = true;
+            updateControls();
+            updateStatus('Starting your 2025 learning journey...');
+            
+            // Start with title screen
+            titleScreen.classList.remove('fade-out');
+            logoGrid.classList.remove('active');
+            outroScreen.classList.remove('active');
+            
+            // Hide title after 6 seconds
+            setTimeout(() => {
+                titleScreen.classList.add('fade-out');
+                setTimeout(() => showNextLogo(), 500);
+            }, CONFIG.titleDuration / state.currentSpeed);
+        }
+
+        // Show next logo in sequence
+        function showNextLogo() {
+            state.currentIndex++;
+            
+            if (state.currentIndex >= tools.length) {
+                // All logos shown, start outro
+                startOutro();
+                return;
+            }
+            
+            updateProgress();
+            updateStatus(`Learning ${tools[state.currentIndex].name}...`);
+            
+            // Activate grid
+            logoGrid.classList.add('active');
+            
+            // Blur background
+            logoGrid.classList.add('blurred');
+            
+            // Show current logo big in center
+            const tool = tools[state.currentIndex];
+            currentLogo.innerHTML = `
+                <img class="current-logo-img" src="${tool.logo}" alt="${tool.name}">
+                <div class="current-logo-name">${tool.name}</div>
+            `;
+            currentLogo.className = `current-logo ${tool.name.toLowerCase().replace(' ', '-')}-logo`;
+            currentLogo.style.color = tool.color;
+            
+            // Play sound if enabled
+            if (state.soundEnabled) {
+                playSound('zoom');
+            }
+            
+            // Activate with delay
+            setTimeout(() => {
+                currentLogo.classList.add('active');
+                
+                // After 1.5 seconds, zoom to grid position
+                setTimeout(() => {
+                    // Play placement sound
+                    if (state.soundEnabled) {
+                        playSound('click');
+                    }
+                    
+                    // Zoom out animation
+                    currentLogo.classList.add('zoom-out');
+                    
+                    // Place logo in grid
+                    const card = document.querySelector(`.logo-card[data-index="${state.currentIndex}"]`);
+                    if (card) {
+                        card.classList.add('active');
+                        setTimeout(() => card.classList.add('placed'), 100);
+                    }
+                    
+                    // Remove blur from background
+                    logoGrid.classList.remove('blurred');
+                    
+                    // Hide current logo after animation
+                    setTimeout(() => {
+                        currentLogo.classList.remove('active');
+                        currentLogo.classList.remove('zoom-out');
+                        currentLogo.innerHTML = '';
+                        
+                        // Show next logo or outro
+                        if (state.currentIndex < tools.length - 1) {
+                            state.animationTimeout = setTimeout(() => {
+                                showNextLogo();
+                            }, 500 / state.currentSpeed);
+                        } else {
+                            state.animationTimeout = setTimeout(() => {
+                                startOutro();
+                            }, 1000 / state.currentSpeed);
+                        }
+                    }, 500 / state.currentSpeed);
+                }, 1500 / state.currentSpeed);
+            }, 100 / state.currentSpeed);
+        }
+
+        // Start outro sequence
+        function startOutro() {
+            updateStatus('What an amazing learning year!');
+            
+            // Show outro screen
+            outroScreen.classList.add('active');
+            
+            // After outro duration, end animation
+            setTimeout(() => {
+                if (state.isPlaying) {
+                    endAnimation();
+                }
+            }, CONFIG.outroDuration / state.currentSpeed);
+        }
+
+        // Pause animation
+        function pauseAnimation() {
+            if (!state.isPlaying) return;
+            
+            state.isPlaying = false;
+            clearTimeout(state.animationTimeout);
+            updateControls();
+            updateStatus('Paused');
+        }
+
+        // Reset animation to beginning
+        function resetAnimation() {
+            clearTimeout(state.animationTimeout);
+            
+            // Reset state
+            state.currentIndex = -1;
+            state.isPlaying = false;
+            
+            // Reset UI
+            titleScreen.classList.remove('fade-out');
+            logoGrid.classList.remove('active');
+            outroScreen.classList.remove('active');
+            currentLogo.classList.remove('active', 'zoom-out');
+            currentLogo.innerHTML = '';
+            
+            // Reset all logo cards
+            document.querySelectorAll('.logo-card').forEach(card => {
+                card.classList.remove('active', 'placed');
+            });
+            
+            // Reset progress
+            updateProgress();
+            updateControls();
+            updateStatus('Ready to replay your learning journey!');
+        }
+
+        // Skip to logo animation (skip intro)
+        function skipIntro() {
+            if (state.isPlaying) pauseAnimation();
+            
+            // Reset and start from first logo
+            resetAnimation();
+            titleScreen.classList.add('fade-out');
+            logoGrid.classList.add('active');
+            state.isPlaying = true;
+            updateControls();
+            
+            setTimeout(() => showNextLogo(), 100);
+        }
+
+        // Skip to outro
+        function skipOutro() {
+            if (state.isPlaying) pauseAnimation();
+            
+            // Show all logos and go to outro
+            resetAnimation();
+            
+            // Activate all logos
+            document.querySelectorAll('.logo-card').forEach(card => {
+                card.classList.add('active', 'placed');
+            });
+            
+            titleScreen.classList.add('fade-out');
+            logoGrid.classList.add('active');
+            outroScreen.classList.add('active');
+            
+            updateStatus('Jumped to the end of your journey!');
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const totalSteps = tools.length + 2; // +2 for title and outro
+            const currentStep = state.currentIndex + 2; // +2 because we start after title
+            const progress = (currentStep / totalSteps) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Toggle sound on/off
+        function toggleSound() {
+            state.soundEnabled = !state.soundEnabled;
+            soundBtn.innerHTML = state.soundEnabled ? 
+                '<i class="fas fa-volume-up"></i> Sound On' : 
+                '<i class="fas fa-volume-mute"></i> Sound Off';
+            updateStatus(`Sound ${state.soundEnabled ? 'enabled' : 'disabled'}`);
+        }
+
+        // Play sound effect
+        function playSound(type) {
+            if (!state.soundEnabled) return;
+            
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                if (type === 'zoom') {
+                    oscillator.frequency.setValueAtTime(300, audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.5);
+                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                    oscillator.start();
+                    oscillator.stop(audioContext.currentTime + 0.5);
+                } else if (type === 'click') {
+                    oscillator.frequency.setValueAtTime(600, audioContext.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(200, audioContext.currentTime + 0.1);
+                    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                    oscillator.start();
+                    oscillator.stop(audioContext.currentTime + 0.1);
+                }
+            } catch (e) {
+                console.log("Audio not supported");
+            }
+        }
+
+        // Set animation speed
+        function setSpeed(speed) {
+            state.currentSpeed = speed;
+            
+            // Update button states
+            speedButtons.forEach(btn => {
+                btn.classList.toggle('active', parseFloat(btn.dataset.speed) === speed);
+            });
+            
+            updateStatus(`Animation speed: ${speed}x`);
+        }
+
+        // Set theme
+        function setTheme(theme) {
+            state.currentTheme = theme;
+            
+            // Update theme button states
+            themeDark.classList.toggle('active', theme === 'dark');
+            themeLight.classList.toggle('active', theme === 'light');
+            themeColorful.classList.toggle('active', theme === 'colorful');
+            
+            // Apply theme to video stage
+            videoStage.className = '';
+            videoStage.classList.add(`theme-${theme}`);
+            
+            // Apply theme styles
+            if (theme === 'dark') {
+                videoStage.style.backgroundColor = '#0f172a';
+                document.querySelectorAll('.logo-card').forEach(card => {
+                    card.style.backgroundColor = 'rgba(30, 41, 59, 0.8)';
+                });
+            } else if (theme === 'light') {
+                videoStage.style.backgroundColor = '#f8fafc';
+                document.querySelectorAll('.logo-card').forEach(card => {
+                    card.style.backgroundColor = 'rgba(226, 232, 240, 0.9)';
+                });
+            } else if (theme === 'colorful') {
+                videoStage.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)';
+                document.querySelectorAll('.logo-card').forEach(card => {
+                    card.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
+                    card.style.backdropFilter = 'blur(10px)';
+                });
+            }
+            
+            updateStatus(`Theme changed to ${theme}`);
+        }
+
+        // Start recording for video download
+        function startRecording() {
+            updateStatus('Preparing video recording...');
+            recordingIndicator.classList.add('active');
+            
+            // In a real implementation, you would use a proper screen recording library
+            // This is a simplified version that creates a video from canvas frames
+            simulateRecording();
+        }
+
+        // Simulate recording (in a real app, use proper screen recording)
+        function simulateRecording() {
+            updateStatus('Recording in progress... This may take a moment.');
+            
+            // Since proper screen recording requires server-side processing or more complex setup,
+            // we'll simulate it and provide a download link for a sample
+            setTimeout(() => {
+                recordingIndicator.classList.remove('active');
+                
+                // Create a "video file" download link
+                const downloadLink = document.createElement('a');
+                downloadLink.href = '#';
+                downloadLink.download = 'My-2025-Learning-Journey.mp4';
+                downloadLink.innerHTML = '<i class="fas fa-video"></i> Video recording simulated';
+                
+                // Show success message with instructions
+                updateStatus('Video recording complete! In a real implementation, this would save an MP4 file.');
+                
+                // Show a preview of what would be downloaded
+                alert('Video recording simulation complete!\n\nIn a full implementation, this would:\n1. Record the animation sequence\n2. Encode it as MP4 video\n3. Download the file to your device\n\nFor now, enjoy the animation!');
+            }, 3000);
+        }
+
+        // End animation
+        function endAnimation() {
+            state.isPlaying = false;
+            updateControls();
+            updateStatus('Your 2025 learning journey is complete! Ready for 2026?');
+        }
+
+        // Update control button states
+        function updateControls() {
+            playBtn.style.display = state.isPlaying ? 'none' : 'flex';
+            pauseBtn.style.display = state.isPlaying ? 'flex' : 'none';
+        }
+
+        // Update status display
+        function updateStatus(message) {
+            statusDisplay.innerHTML = `<i class="fas fa-info-circle"></i> ${message}`;
+        }
+
+        // Initialize the app when page loads
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
