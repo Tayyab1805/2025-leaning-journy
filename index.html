@@ -486,9 +486,9 @@
                 
                 <!-- Outro Screen -->
                 <div class="outro-screen" id="outro-screen">
-                    <h2 class="outro-title">What a Year!</h2>
+                    <h2 class="outro-title">The Great Learning Year</h2>
                     <p class="outro-message">
-                        12 new tools and skills mastered.<br>
+                        12 new tools and skills Learned.<br>
                         Ready to build amazing things in 2026!
                     </p>
                     <div style="margin-top: 30px; font-size: 4rem;">
@@ -496,7 +496,8 @@
                     </div>
                     <p style="margin-top: 20px; color: #cbd5e1; font-size: 1rem;">
                         Keep learning, keep growing!
-                    </p>
+                    </
+                    7p>
                 </div>
             </div>
         </div>
@@ -581,75 +582,94 @@
     <script>
         // Configuration
         const CONFIG = {
-            titleDuration: 6000, // 6 seconds
-            logoDuration: 3000,  // 3 seconds per logo
+            titleDuration: 1000, // 6 seconds
+            logoDuration: 2000,  // 3 seconds per logo
             outroDuration: 5000, // 5 seconds
             totalLogos: 12
         };
 
         // Learning Tools Data
         const tools = [
+
+        
+
             { 
                 name: "LinkedIn", 
-                color: "#0077B5",
+                color: "#1572B6",
                 logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/linkedin.svg"
             },
-            { 
-                name: "DeepSeek", 
-                color: "#0d6efd",
-                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/openai.svg" // Placeholder
-            },
-            { 
-                name: "Kaggle", 
-                color: "#20BEFF",
-                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/kaggle.svg"
-            },
-            { 
-                name: "Python", 
-                color: "#3776AB",
-                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/python.svg"
-            },
-            { 
-                name: "Markdown", 
-                color: "#000000",
-                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/markdown.svg"
-            },
-            { 
-                name: "VS Code", 
-                color: "#007ACC",
-                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/visualstudiocode.svg"
-            },
-            { 
-                name: "Alison", 
-                color: "#00A79D",
-                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/coursera.svg" // Placeholder
-            },
+
+
+            
             { 
                 name: "Khan Academy", 
-                color: "#14BF96",
+                color: "#1572B6",
                 logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/khanacademy.svg"
             },
             { 
                 name: "LoveAble", 
-                color: "#FF6B8B",
-                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/love.svg" // Placeholder
+                color: "#1572B6",
+                logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23FF6B8B' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E" 
+            },
+           
+            { 
+                name: "Python", 
+                color: "#1572B6",
+                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/python.svg"
             },
             { 
+                name: "Markdown", 
+                color: "#1572B6",
+                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/markdown.svg"
+            },
+            { 
+                name: "VS Code", 
+                color: "#1572B6",
+                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/visualstudiocode.svg"
+            },
+
+            { 
+                name: "Cisco Networking Academy", 
+                color: "#1572B6",
+                logo: "https://static.cdnlogo.com/logos/c/60/cisco_800.png" 
+            },
+            { 
+                name: "Kaggle", 
+                color: "#1572B6",
+                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/kaggle.svg"
+            },
+
+            { 
+                name: "Alison", 
+                color: "#1572B6",
+                logo: "https://static.cdnlogo.com/logos/a/40/alison_800.png"
+            },
+
+
+          
+            { 
                 name: "HTML", 
-                color: "#E34F26",
+                color: "#1572B6",
                 logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/html5.svg"
             },
+          
+            { 
+                name: "Cursor", 
+                color: "#1572B6",
+                logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23181717' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z'/%3E%3C/svg%3E"
+            }
+            , 
             { 
                 name: "CSS", 
                 color: "#1572B6",
                 logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/css3.svg"
-            },
-            { 
-                name: "GitHub", 
-                color: "#181717",
-                logo: "https://cdn.jsdelivr.net/npm/simple-icons@v8/icons/github.svg"
             }
-        ];
+            
+    
+
+
+
+        ]
 
         // App State
         let state = {
@@ -708,6 +728,11 @@
                 img.className = 'logo-img';
                 img.src = tool.logo;
                 img.alt = `${tool.name} logo`;
+                // Fallback for broken images
+                img.onerror = function() {
+                    this.onerror = null; // Prevent infinite loop
+                    this.src = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23fff\' stroke-width=\'2\'%3E%3Ccircle cx=\'12\' cy=\'12\' r=\'10\'/%3E%3Cpath d=\'M12 8v4M12 16h.01\'/%3E%3C/svg%3E';
+                };
                 
                 const name = document.createElement('div');
                 name.className = 'logo-name';
@@ -787,6 +812,14 @@
                 <img class="current-logo-img" src="${tool.logo}" alt="${tool.name}">
                 <div class="current-logo-name">${tool.name}</div>
             `;
+            // Add error handling for broken images
+            const currentImg = currentLogo.querySelector('.current-logo-img');
+            if (currentImg) {
+                currentImg.onerror = function() {
+                    this.onerror = null; // Prevent infinite loop
+                    this.src = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23fff\' stroke-width=\'2\'%3E%3Ccircle cx=\'12\' cy=\'12\' r=\'10\'/%3E%3Cpath d=\'M12 8v4M12 16h.01\'/%3E%3C/svg%3E';
+                };
+            }
             currentLogo.className = `current-logo ${tool.name.toLowerCase().replace(' ', '-')}-logo`;
             currentLogo.style.color = tool.color;
             
